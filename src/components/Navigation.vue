@@ -1,18 +1,24 @@
 <template>
-  <div class="vs-carousel--navigation">
+  <div
+    class="vs-carousel__navigation"
+    role="navigation"
+  >
     <button
+      aria-label="Previous Slide"
+      class="vs-carousel__navigation-control vs-carousel__navigation-control--left"
       type="button"
-      class="vs-carousel--navigation_control left"
-      :class="{ 'vs-carousel--navigation_disabled': !canNavigateLeft }"
+      :class="{ 'vs-carousel__navigation-control--disabled': !canNavigateLeft }"
       :disabled="!canNavigateLeft"
       :style="{
-        width: navigationSize,
-        height: navigationSize,
+        color,
+        'padding': navigationArrowPadding,
+        'width': navigationSize,
+        'height': navigationSize,
       }"
       @click.prevent="navigateSlides('left')"
     >
       <div
-        class="vs-carousel--navigation_arrow"
+        class="vs-carousel__navigation-arrow"
         :style="{
           'height': navigationArrowSize,
           'width': navigationArrowSize,
@@ -21,18 +27,21 @@
         ></div>
     </button>
     <button
+      aria-label="Next Slide"
+      class="vs-carousel__navigation-control vs-carousel__navigation-control--right"
       type="button"
-      class="vs-carousel--navigation_control right"
-      :class="{ 'vs-carousel--navigation_disabled': !canNavigateRight }"
+      :class="{ 'vs-carousel__navigation-control--disabled': !canNavigateRight }"
       :disabled="!canNavigateRight"
       :style="{
-        width: navigationSize,
-        height: navigationSize,
+        color,
+        'padding': navigationArrowPadding,
+        'width': navigationSize,
+        'height': navigationSize,
       }"
       @click.prevent="navigateSlides('right')"
     >
       <div
-        class="vs-carousel--navigation_arrow"
+        class="vs-carousel__navigation-arrow"
         :style="{
           'height': navigationArrowSize,
           'width': navigationArrowSize,
@@ -55,12 +64,16 @@ export default {
       type: Boolean,
       required: true,
     },
-    size: {
+    color: {
+      type: String,
+      required: true,
+    },
+    padding: {
       type: Number,
       required: true,
     },
-    color: {
-      type: String,
+    size: {
+      type: Number,
       required: true,
     },
   },
@@ -70,6 +83,9 @@ export default {
     },
   },
   computed: {
+    navigationArrowPadding() {
+      return `${this.padding}px`;
+    },
     navigationArrowBorder() {
       return `${Math.floor(this.size / 10)}px`;
     },
@@ -84,41 +100,39 @@ export default {
 </script>
 
 <style lang="scss">
-.vs-carousel--navigation {
+.vs-carousel__navigation {
 
-  &_control {
+  &-control {
     cursor: pointer;
+    padding: 0;
     box-sizing: content-box;
     position: absolute;
     top: 50%;
-    padding: 16px;
     border: none;
     background: transparent;
     transition: all .3s;
 
-    &.left {
+    &--left {
       left: 0;
       transform: translate(-100%, -50%) rotate(180deg);
     }
 
-    &.right {
+    &--right {
       left: 100%;
       transform: translateY(-50%);
     }
 
-    &:disabled {
+    &--disabled {
       opacity: 0.2;
     }
   }
 
-  &_arrow {
+  &-arrow {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-75%, -50%) rotate(-45deg);
-    width: 15px;
-    height: 15px;
-    border: 1px solid #000;
+    border: 1px solid currentColor;
     border-top: 0;
     border-left: 0;
   }

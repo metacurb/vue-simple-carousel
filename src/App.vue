@@ -1,25 +1,58 @@
 <template>
   <div id="app">
     <Carousel
-      slideSpeed="500"
+      :autoplay="true"
+      :autoplayCycleFrequency="4000"
+      autoplayDirection="right"
+      :autoplayPauseOnHover="true"
+      :minDrag="300"
+      navigationColor="purple"
+      :navigationEnabled="false"
+      :navigationPadding="10"
+      :navigationSize="100"
+      paginationColor="tan"
+      paginationColorActive="tomato"
+      :paginationEnabled="false"
+      :paginationMargin="50"
+      :pointerEventsEnabled="false"
+      slideEasing="ease-in-out"
+      :slideSpeed="1000"
     >
       <Slide>
-        <img src="@/assets/images/birdcage.jpg">
+        <img
+          draggable="false"
+          src="@/assets/images/birdcage.jpg"
+        >
       </Slide>
       <Slide>
-        <img src="@/assets/images/rain-coats.jpg">
+        <img
+          draggable="false"
+          src="@/assets/images/rain-coats.jpg"
+        >
       </Slide>
       <Slide>
-        <img src="@/assets/images/man-on-bench.jpg">
+        <img
+          draggable="false"
+          src="@/assets/images/man-on-bench.jpg"
+        >
       </Slide>
       <Slide>
-        <img src="@/assets/images/birdcage.jpg">
+        <img
+          draggable="false"
+          src="@/assets/images/birdcage.jpg"
+        >
       </Slide>
       <Slide>
-        <img src="@/assets/images/rain-coats.jpg">
+        <img
+          draggable="false"
+          src="@/assets/images/rain-coats.jpg"
+        >
       </Slide>
       <Slide>
-        <img src="@/assets/images/man-on-bench.jpg">
+        <img
+          draggable="false"
+          src="@/assets/images/man-on-bench.jpg"
+        >
       </Slide>
     </Carousel>
   </div>
@@ -54,6 +87,6 @@ body {
 
 #app {
   margin: 0 auto;
-  max-width: 600px;
+  // max-width: 600px;
 }
 </style>

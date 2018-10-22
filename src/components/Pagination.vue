@@ -1,9 +1,9 @@
 <template>
-  <ul class="vs-carousel--pagination">
+  <ul class="vs-carousel__pagination">
     <li
       v-for="(slide, index) in slides"
       :key="slide"
-      class="vs-carousel--pagination_dot"
+      class="vs-carousel__pagination-item"
       :class="{
         active: isActiveSlide(index),
       }"
@@ -12,7 +12,9 @@
       }"
     >
       <button
+        class="vs-carousel__pagination-button"
         type="button"
+        :aria-selected="isActiveSlide(index)"
         :style="{
           background: isActiveSlide(index) ? colorActive : color,
         }"
@@ -61,8 +63,7 @@ export default {
 </script>
 
 <style lang="scss">
-
-.vs-carousel--pagination {
+.vs-carousel__pagination {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,20 +71,20 @@ export default {
   margin: 0;
   padding: 10px;
 
-  &_dot {
+  &-item {
     margin: 0;
+  }
 
-    button {
-      cursor: pointer;
-      padding: 0;
-      border-radius: 50%;
-      text-indent: -9999px;
-      border: none;
-      width: 14px;
-      height: 14px;
-      transition: background .3s ease;
-    }
+  &-button {
+    display: block;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
+    text-indent: -9999px;
+    border: none;
+    width: 14px;
+    height: 14px;
+    transition: background .3s ease;
   }
 }
-
 </style>
