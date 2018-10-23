@@ -25,6 +25,8 @@ _Vue Simple Carousel_ uses a simple structure.
 | autoplay | `Boolean` | false | Determines whether the carousel will cycle on it's own |
 | autoplayCycleFrequency | `Number` | `4000` | How long before the autoplaying carousel will cycle again (milliseconds) |
 | autoplayDirection | `String` | `'right'` | The direction the carousel autoplays in. Accepts `'left'` or `'right'` |
+| autoplayPauseOnHover | `Boolean` | `true` | Pause autoplay when a user hovers over the carousel |
+| infiniteCycle | `Boolean` | `false` | Cycle the carousel infinitely |
 | minDrag | `Number` | `100` | The minimum distance to drag before slide transition will occur (pixels) |
 | navigationColor | `String` | `'#000'` | The colour of the navigation arrows. Can be any CSS-supported colour format |
 | navigationEnabled | `Boolean` | `true` | Show navigation arrows either side of the carousel |

@@ -5,6 +5,7 @@
       :autoplayCycleFrequency="4000"
       autoplayDirection="right"
       :autoplayPauseOnHover="true"
+      :infiniteCycle="true"
       :minDrag="300"
       navigationColor="purple"
       :navigationEnabled="false"
@@ -14,9 +15,10 @@
       paginationColorActive="tomato"
       :paginationEnabled="false"
       :paginationMargin="50"
-      :pointerEventsEnabled="false"
+      :pointerEventsEnabled="true"
       slideEasing="ease-in-out"
       :slideSpeed="1000"
+      @onNavigation="logEvent"
     >
       <Slide>
         <img
@@ -76,6 +78,11 @@ export default {
         '@/assets/images/trench-coat.jpg',
       ],
     };
+  },
+  methods: {
+    logEvent(e) {
+      console.log(e);
+    },
   },
 };
 </script>

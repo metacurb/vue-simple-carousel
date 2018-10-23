@@ -70,6 +70,14 @@ export default {
       type: String,
       default: 'right',
     },
+    autoplayPauseOnHover: {
+      type: Boolean,
+      default: true,
+    },
+    infiniteCycle: {
+      type: Boolean,
+      default: false,
+    },
     minDrag: {
       type: Number,
       default: 100,
@@ -133,18 +141,45 @@ export default {
     window.addEventListener('resize', this.onResize);
     this.initPointerEvents();
     this.getViewfinderWidth();
-    this.setAutoplay();
+    this.autoplayInit();
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onResize);
   },
   methods: {
-    initPointerEvents() {
-      if (!this.dragEnabled) return;
-      this.$refs.viewfinder.addEventListener('pointerdown', this.onPointerDown, false);
+    autoplayInit() {
+      if (!this.autoplay) return;
+      if (this.autoplayPauseOnHover) {
+        this.autoplayStart();
+        this.$refs.viewfinder.addEventListener('pointerenter', this.autoplayStop, false);
+        this.$refs.viewfinder.addEventListener('pointerleave', this.autoplayStart, false);
+      }
+    },
+    autoplayStart() {
+      this.autoplayFn = setInterval(() => this.navigationHandler(this.autoplayDirection, 'autoplay'), this.autoplayCycleFrequency);
+    },
+    autoplayStop() {
+      if (this.autoplayFn) this.autoplayFn = clearInterval(this.autoplayFn);
     },
     getViewfinderWidth() {
       this.viewfinderWidth = parseInt(this.$refs.slides.offsetWidth, 10);
     },
-    onPointerEnter(e) {
-      console.log(e);
+    initPointerEvents() {
+      if (!this.dragEnabled) return;
+      this.$refs.viewfinder.addEventListener('pointerdown', this.onPointerDown, false);
+    },
+    navigationHandler(direction, navigationType) {
+      if (direction === 'left' && this.canNavigateLeft) {
+        const nextSlide = this.infiniteCycle && this.isFirstSlide ?
+          this.numberOfSlides - 1 :
+          this.currentSlide - 1;
+        this.slideTo(nextSlide, navigationType);
+      } else if (direction === 'right' && this.canNavigateRight) {
+        const nextSlide = this.infiniteCycle && this.isLastSlide ?
+          0 :
+          this.currentSlide + 1;
+        this.slideTo(nextSlide, navigationType);
+      }
     },
     onPointerDown(event) {
       this.dragPosStart = event.clientX;
@@ -168,34 +203,26 @@ export default {
       window.removeEventListener('pointerup', this.onPointerUp, false);
       window.removeEventListener('pointerleave', this.onPointerUp, false);
     },
-    setAutoplay() {
-      if (!this.autoplay) return;
-      this.$refs.viewfinder.addEventListener('pointerenter', this.onPointerEnter, false);
-      this.autoplayFn = setInterval(() => this.navigationHandler(this.autoplayDirection, 'autoplay'), this.autoplayCycleFrequency);
+    onResize() {
+      this.getViewfinderWidth();
     },
     slideTo(newSlide, navigationType) {
       this.$emit('onNavigation', {
         currentSlide: newSlide + 1,
         previousSlide: this.currentSlide + 1,
+        isFirstSlide: newSlide === 0,
         isLastSlide: newSlide + 1 === this.numberOfSlides,
         navigationType,
       });
       this.currentSlide = newSlide;
     },
-    navigationHandler(direction, navigationType) {
-      if (direction === 'left' && this.canNavigateLeft) this.slideTo(this.currentSlide - 1, navigationType);
-      else if (direction === 'right' && this.canNavigateRight) this.slideTo(this.currentSlide + 1, navigationType);
-    },
-    onResize() {
-      this.getViewfinderWidth();
-    },
   },
   computed: {
     canNavigateLeft() {
-      return this.currentSlide !== 0;
+      return this.infiniteCycle || this.currentSlide !== 0;
     },
     canNavigateRight() {
-      return this.currentSlide < this.numberOfSlides - 1;
+      return this.infiniteCycle || this.currentSlide < this.numberOfSlides - 1;
     },
     carouselMargin() {
       if (!this.navigationEnabled) return null;
@@ -204,6 +231,12 @@ export default {
     },
     carouselWidth() {
       return `${this.numberOfSlides * 100}%`;
+    },
+    isFirstSlide() {
+      return this.currentSlide === 0;
+    },
+    isLastSlide() {
+      return this.currentSlide + 1 === this.numberOfSlides;
     },
     navigationDirection() {
       if (this.dragOffset < 0) return 'right';
