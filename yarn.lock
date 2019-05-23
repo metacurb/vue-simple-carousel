@@ -907,10 +907,11 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@vue/preload-webpack-plugin/-/preload-webpack-plugin-1.0.0.tgz#08f156532909824da2aad258e151742d1e8f822e"
 
-"@vue/test-utils@^1.0.0-beta.20":
-  version "1.0.0-beta.21"
-  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-1.0.0-beta.21.tgz#fe1ee11ce16072da7ef29420df4aa5c11f4560ff"
+"@vue/test-utils@^1.0.0-beta.29":
+  version "1.0.0-beta.29"
+  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-1.0.0-beta.29.tgz#c942cf25e891cf081b6a03332b4ae1ef430726f0"
   dependencies:
+    dom-event-types "^1.0.0"
     lodash "^4.17.4"
 
 "@vue/web-component-wrapper@^1.2.0":
@@ -2865,6 +2866,10 @@ dom-converter@~0.1:
   resolved "https://registry.yarnpkg.com/dom-converter/-/dom-converter-0.1.4.tgz#a45ef5727b890c9bffe6d7c876e7b19cb0e17f3b"
   dependencies:
     utila "~0.3"
+
+dom-event-types@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/dom-event-types/-/dom-event-types-1.0.0.tgz#5830a0a29e1bf837fe50a70cd80a597232813cae"
 
 dom-serializer@0:
   version "0.1.0"
@@ -6462,6 +6467,10 @@ pbkdf2@^3.0.3:
     ripemd160 "^2.0.1"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
+
+pepjs@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/pepjs/-/pepjs-0.4.3.tgz#16080e970aae779913756c2daef88eaa7486df41"
 
 performance-now@^0.2.0:
   version "0.2.0"
